@@ -1,0 +1,15 @@
+<h2>Hello, valued user! Please log in.</h2>
+<br>
+<br>
+<form method='POST'>
+  <input type='text' name='name' placeholder='What is your name?'>
+  <input type="password" name="password" placeholder='Password?' value="">
+  <label><input type='checkbox' name='remember'>Remember me</label>
+  <br>
+  <input type='submit'>
+</form>
+<br>
+<p>Don't have an account? <a href="/users/signup">Sign up</a></p>
+<br>
+
+<p style='color:red'>{{error}}<p>

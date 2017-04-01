@@ -29,6 +29,11 @@ app.set('view engine', 'handlebars');
 var index = require('./routes/index');
 app.use('/', index);
 
+var users = require('./routes/users');
+app.use('/users', users);
+
+var articles = require('./routes/articles');
+app.use('/articles', articles);
 
 
 app.listen(3000, function() {

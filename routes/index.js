@@ -10,4 +10,9 @@ router.get('/', function(req, res, next) {
 	res.render('home', context);
 });
 
+router.get('/logout', function(req, res) {
+	res.clearCookie('name');
+	res.redirect('/');
+});
+
 module.exports = router;

@@ -2,11 +2,11 @@ Wiki like site. Features:
 	User log in and sign up (and logout).
 	Homepage displays 5 latest new or latest edited articles
 	Each article has history - changes made when and by whom?
-	Search for articles.
+	Search for articles. (look for mongooses regexp search functions)
 	View all articles by first letter.
 
 	Homepage is cached and cache is updated when article is updated or posted.
-
+	Display number of articles and users on the homepage.
 
 Layout/routes-
 	Home
@@ -24,13 +24,11 @@ Layout/routes-
 
 Immediate tasks
 
-
-	Create different routes
+	Routing problem - main handlebars layout affected by route path - looking for main.css in e.g. /users/css rather than /css
 
 	Ability to sign up/in/out - cookies, form and validation (ajax and server validation?!)
 
 	Add in db
-
 
 	Add in cache
 
