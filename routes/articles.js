@@ -30,10 +30,23 @@ router.route('/add')
 
 	});
 
+// route middleware to validate :id
+router.param('id', function(req, res, next, id) {
+    // do validation on id here
+    // blah blah validation
+    // log something so we know its working
+    console.log('doing id validations on ' + id);
+
+    // once validation is done save the new item in the req
+    req.id = id;
+    // go to the next thing
+    next(); 
+});
+
 //View an individual article
 router.route('/:id')
 	.get(function(req, res){
-
+		console.log("From the get function, after the middleware, id is : " + req.id);
 	});
 
 //Edit an individual article if logged in

@@ -24,6 +24,8 @@ Layout/routes-
 
 Immediate tasks
 
+	Incorporate middleware for validation etc! In users routes and maybe articles etc.
+
 	Routing problem - main handlebars layout affected by route path - looking for main.css in e.g. /users/css rather than /css
 
 	Ability to sign up/in/out - cookies, form and validation (ajax and server validation?!)
