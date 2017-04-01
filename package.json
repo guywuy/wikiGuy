@@ -1,0 +1,20 @@
+{
+  "name": "wikiguy",
+  "version": "1.0.0",
+  "description": "Editable collection of articles by various users",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "guywuy",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.17.1",
+    "cookie-parser": "^1.4.3",
+    "express": "^4.15.2",
+    "express-handlebars": "^3.0.0",
+    "mongoose": "^4.9.2",
+    "node-cache": "^4.1.1",
+    "object-hash": "^1.1.5"
+  }
+}
