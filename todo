@@ -1,0 +1,38 @@
+Wiki like site. Features:
+	User log in and sign up (and logout).
+	Homepage displays 5 latest new or latest edited articles
+	Each article has history - changes made when and by whom?
+	Search for articles.
+	View all articles by first letter.
+
+	Homepage is cached and cache is updated when article is updated or posted.
+
+
+Layout/routes-
+	Home
+	Login/signup
+	Add article
+	View all articles (by letter)
+	View individual article (link to history, ability to edit if signed in, and delete)
+
+
+
+
+
+
+
+
+Immediate tasks
+
+
+	Create different routes
+
+	Ability to sign up/in/out - cookies, form and validation (ajax and server validation?!)
+
+	Add in db
+
+
+	Add in cache
+
+	Improve styling
+

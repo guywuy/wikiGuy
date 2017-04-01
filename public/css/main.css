@@ -1,0 +1,21 @@
+* {
+	font-family: Helvetica, sans-serif;
+}
+body {
+
+}
+a {
+	text-decoration: none;
+}
+.header {
+
+}
+.header h1 {
+
+}
+.header a {
+	float: right;
+	position: fixed;
+	right: 10px;
+	top: 10px;
+}
