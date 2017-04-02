@@ -6,10 +6,8 @@ var articleSchema = new mongoose.Schema({
   articleContent: String,
   dateAdded: { type: Date, default: Date.now },
   dateUpdated: { type: Date, default: Date.now },
-  history: {
-  	version: { type: Number, default: 0 }, 
-  	oldContent: [String]
-  }
+  version: Number, 
+  oldContent: [String]
 });
 
 var userSchema = new mongoose.Schema({

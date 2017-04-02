@@ -10,17 +10,12 @@ var loggedIn = false;
 
  // route middleware that will happen on every request
 router.use(function(req, res, next) {
-
-    // log each request to the console
-    console.log(req.method, req.url);
-
     // Parse the cookies on the request 
 	var cookies = cookie.parse(req.headers.cookie || '');
 
     loggedIn = check.loggedIn(cookies);
     console.log("Logged in = " + loggedIn);
 
-    // continue doing what we were doing and go to the route
     next(); 
 });
 

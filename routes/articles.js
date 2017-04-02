@@ -1,24 +1,55 @@
 // Route handlers for list of articles and individual articles ( edit article, view history and delete)
 
-var express = require('express'),
-    router = express.Router();
+var express = require('express');
+var router = express.Router();
+var cookie = require('cookie');
+var mongoose = require('mongoose');
+
+var check = require('../routes/validity');
+var loggedIn = false;
+
+ // route middleware that will happen on every request
+router.use(function(req, res, next) {
+    // Parse the cookies on the request 
+	var cookies = cookie.parse(req.headers.cookie || '');
+
+    loggedIn = check.loggedIn(cookies);
+    console.log("Logged in = " + loggedIn);
+
+    next(); 
+});
+
 
 /* GET /articles. */
 router.route('/')
 	//GET all articles
 	.get(function(req, res, next) {
-		let articles = [];
 
-  		var context = {
-			'title': 'Articles',
-			'article': articles
+		mongoose.model('Article').find({}).sort({dateUpdated: 1}).exec(function(err, articles) {
+			if (err) {
+				return console.error(err);
+			} else {
+				// //Add to memcache, as key->value pair of int->food object
+				// for (food in foods){
+				// 	memcache.set(food, foods[food]);
+				// }
+				// console.log(memcache.keys());
+				// // console.log("Stats keys" + memcache.getStats().keys);
+
+				res.render('articleslist', {
+					'title': 'All articles',
+					'article': articles
+				})
 			};
-		res.render('articleslist', context);
+		});
+
+  // 		var context = {
+		// 	'title': 'Articles',
+		// 	'article': articles
+		// 	};
+		// res.render('articleslist', context);
 	})
 
-	.post(function(req, res) {
-	
-	});
 
 //Add an article
 router.route('/add')
@@ -34,8 +65,30 @@ router.route('/add')
 
 	//If post is valid (article doesn't already exist, has name and body) update cache and db, redirect to homepage
 	.post(function(req, res){
-		if (true){
-			res.redirect('/');
+		if (!loggedIn){
+			res.send('You must be logged in to add an article');
+		} else {
+			mongoose.model('Article').findOne({
+			name: req.body.name
+		}, function(err, article) {
+			// If article is already in db, rerender page
+			if (article) {
+				console.log("Article already exists in db");
+				res.render('article_add', {
+					'title': 'Add an article',
+					'errorMessage': "Article with that title already exists"
+				});
+			} else {
+				// If username not already in db, add new user to the database with a hashed password.
+				mongoose.model('Article').create({
+					name: req.body.name,
+					articleContent: req.body.article,
+					version: 0,
+					oldContent: [req.body.article]
+				});
+				res.redirect('/articles');
+			}
+		});
 		}
 	});
 

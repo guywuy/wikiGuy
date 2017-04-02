@@ -8,14 +8,6 @@ Wiki like site. Features:
 	Homepage is cached and cache is updated when article is updated or posted.
 	Display number of articles and users on the homepage.
 
-Layout/routes-
-	Home
-	Login/signup
-	Add article
-	View all articles (by letter)
-	View individual article (link to history, ability to edit if signed in, and delete)
-
-
 
 
 
@@ -24,13 +16,11 @@ Layout/routes-
 
 Immediate tasks
 
-	Incorporate middleware for validation etc! In users routes and maybe articles etc.
+	Does article content submitted (and user sign up etc) need escaping?
 
-	Routing problem - main handlebars layout affected by route path - looking for main.css in e.g. /users/css rather than /css
+	AJAX form validation (ajax and server validation?!)
 
-	Ability to sign up/in/out - cookies, form and validation (ajax and server validation?!)
-
-	Add in db
+	Add log in / log out links depending on whether logged in or not.
 
 	Add in cache
 
