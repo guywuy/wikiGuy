@@ -1,13 +1,13 @@
-<h2>Hello, valued user! Please log in.</h2>
+<h3>Hello, valued user! Please log in.</h3>
 <form method='POST'>
   <label>Name:</label><input type='text' name='name' placeholder='What is your name?'>
   <label>Password:</label><input type="password" name="password" placeholder='Password?' value="">
   <br>
-  <label id="remember">Remember me</label><input type='checkbox' name='remember'>
+  <label id="remember">Remember me<input type='checkbox' name='remember'></label>
   <input type='submit'>
 </form>
 <br>
 <p>Don't have an account? <a href="/users/signup">Sign up</a></p>
 <br>
 
-<p style='color:red'>{{error}}<p>
+<p class='error'>{{error}}<p>

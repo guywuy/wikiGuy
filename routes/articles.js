@@ -23,11 +23,20 @@ router.route('/')
 //Add an article
 router.route('/add')
 	.get(function(req, res){
-
+		//if user is logged in, show form to submit article,
+		// else show link to log in
+		if (true){
+			res.render('article_add', {'title': 'Add an article'})
+		} else {
+			res.redirect('/users/login');
+		}
 	})
 
+	//If post is valid (article doesn't already exist, has name and body) update cache and db, redirect to homepage
 	.post(function(req, res){
-
+		if (true){
+			res.redirect('/');
+		}
 	});
 
 // route middleware to validate :id

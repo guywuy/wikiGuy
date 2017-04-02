@@ -8,8 +8,8 @@ app.use(bodyParser.urlencoded({
 })); // support encoded bodies
 
 // DB stuff
-// var mongoose = require('mongoose');
-// var db = require('./model/db');
+var mongoose = require('mongoose');
+var db = require('./model/db');
 
 // Template stuff
 var exphbs = require('express-handlebars');

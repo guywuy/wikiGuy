@@ -1,23 +1,26 @@
-<h2>Hello! Looks like you're new here. Please sign up.</h2>
+<h3>Hello! Looks like you're new here. Please sign up.</h3>
 <form method='POST'>
-	<p style='color:red'>{{errorMessage}}</p>
+	<p class='error'>{{errorMessage}}</p>
   <label>Name:</label><input type='text' name='name' placeholder='What is your name?' required value={{name}}>
+  <p class='error'>{{errorMessageUsername}}</p>
   <br>
   <label>Password:</label><input type="password" name="password" placeholder='Password?' value="" required>
+  <p class='error'>{{errorMessagePassword}}</p>
   <br>
   <label>Confim password:</label><input type="password" name="verify" placeholder='Repeat password.' value="" required>
+  <p class='error'>{{errorMessageVerify}}</p>
   <br>
   <label>Email:</label><input type="text" name="email" placeholder='Email?' value={{email}}>
+  <p class='error'>{{errorMessageEmail}}</p>
   <br>
   <br>
-  <label id="remember">Remember me</label><input type='checkbox' name='remember'>
+  <label id="remember">Remember me<input type='checkbox' name='remember'></label>
   <input type='submit'>
 </form>
 <br>
 <p>Already have an account? <a href="/users/login">Log in</a></p>
 <br>
-<p style='color:red'>{{errorMessage}}</p>
-<p style='color:red'>{{errorMessageUsername}}</p>
-<p style='color:red'>{{errorMessagePassword}}</p>
-<p style='color:red'>{{errorMessageVerify}}</p>
-<p style='color:red'>{{errorMessageEmail}}</p>
+
+
+
+

@@ -7,8 +7,8 @@ var articleSchema = new mongoose.Schema({
   dateAdded: { type: Date, default: Date.now },
   dateUpdated: { type: Date, default: Date.now },
   history: {
-  	{ version: Number, default: 0 }, 
-  	oldContent: Array
+  	version: { type: Number, default: 0 }, 
+  	oldContent: [String]
   }
 });
 
