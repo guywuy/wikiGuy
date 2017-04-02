@@ -1,5 +1,6 @@
 * {
 	font-family: Helvetica, sans-serif;
+	font-weight: 100;
 }
 body {
 
@@ -11,11 +12,44 @@ a {
 
 }
 .header h1 {
-
 }
 .header a {
 	float: right;
 	position: fixed;
 	right: 10px;
 	top: 10px;
+}
+
+form {
+	display: inline-block;
+	background: lightblue;
+	padding: 1em;
+	width:80%;
+	margin: 0 auto;
+}
+form input {
+    display: inline-block;
+    float: left;
+	padding: 1em;
+	margin-bottom: 1em;
+	width: 300px;
+}
+form input[type=submit]{
+	padding: 10px 15px; 
+    background:white; 
+    border:0 none;
+    cursor:pointer;
+    -webkit-border-radius: 5px;
+    border-radius: 5px; 
+}
+form label{
+	display: inline-block;
+    float: left;
+    clear: left;
+    width: 40%;
+	font-size:1em;
+	margin-right: 10px;
+}
+form #remember {
+	font-size: 0.8em;
 }
