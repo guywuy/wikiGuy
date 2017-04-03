@@ -131,7 +131,9 @@ router.route('/:id')
 					'title' : namey,
 					'articleName' : namey,
 					'articleCreationDate' : articleCreationDate,
-					'articleContent' : articleContent
+					'articleContent' : articleContent,
+					'articleEdit' : req.id + "/edit",
+					'articleHistory' : req.id + "/history"
 				});
 				} else {
 					console.log("Article not found");
@@ -145,17 +147,17 @@ router.route('/:id')
 //Edit an individual article if logged in
 router.route('/:id/edit')
 	.get(function(req, res){
-
+		res.send("Route working");
 	});
 
 //View history of article
 router.route('/:id/history')
 	.get(function(req, res){
-
+		res.send("Route working");
 	});
 
 //Delete an individual article
-router.route('/:id/delete')
+router.route('/:id/edit/delete')
 
 	//Check user is logged in (and has permission?!) then delete article,
 	// update db and cache and return to article list
