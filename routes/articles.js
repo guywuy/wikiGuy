@@ -12,6 +12,8 @@ var loggedIn = false;
 router.use(function(req, res, next) {
     // Parse the cookies on the request 
 	var cookies = cookie.parse(req.headers.cookie || '');
+	//If there is a cookie for 'name', get the name (cookie is of form 'name:hash(secret + name)')
+	if (cookies.name) var username = cookies.name.split(":")[0];
 
     loggedIn = check.loggedIn(cookies);
     console.log("Logged in = " + loggedIn);
@@ -43,11 +45,6 @@ router.route('/')
 			};
 		});
 
-  // 		var context = {
-		// 	'title': 'Articles',
-		// 	'article': articles
-		// 	};
-		// res.render('articleslist', context);
 	})
 
 
@@ -84,6 +81,8 @@ router.route('/add')
 					name: req.body.name,
 					articleContent: req.body.article,
 					version: 0,
+					createdBy: username,
+					editedBy: [username],
 					oldContent: [req.body.article]
 				});
 				res.redirect('/articles');
