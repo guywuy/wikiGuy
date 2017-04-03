@@ -7,13 +7,14 @@ var mongoose = require('mongoose');
 
 var check = require('../routes/validity');
 var loggedIn = false;
+var username;
 
  // route middleware that will happen on every request
 router.use(function(req, res, next) {
     // Parse the cookies on the request 
 	var cookies = cookie.parse(req.headers.cookie || '');
 	//If there is a cookie for 'name', get the name (cookie is of form 'name:hash(secret + name)')
-	if (cookies.name) var username = cookies.name.split(":")[0];
+	if (cookies.name) username = cookies.name.split(":")[0];
 
     loggedIn = check.loggedIn(cookies);
     console.log("Logged in = " + loggedIn);
@@ -53,7 +54,7 @@ router.route('/add')
 	.get(function(req, res){
 		//if user is logged in, show form to submit article,
 		// else show link to log in
-		if (true){
+		if (loggedIn){
 			res.render('article_add', {'title': 'Add an article'})
 		} else {
 			res.redirect('/users/login');
@@ -98,8 +99,8 @@ router.param('id', function(req, res, next, id) {
     // log something so we know its working
     console.log('doing id validations on ' + id);
 
-    // once validation is done save the new item in the req
     req.id = id;
+
     // go to the next thing
     next(); 
 });
@@ -107,7 +108,38 @@ router.param('id', function(req, res, next, id) {
 //View an individual article
 router.route('/:id')
 	.get(function(req, res){
-		console.log("From the get function, after the middleware, id is : " + req.id);
+		//Get name from db via id and
+
+		var namey;
+		var articleCreationDate;
+		var articleContent;
+
+    //Get name from database via ip and set as parameter
+    mongoose.model('Article').findOne({
+			_id: req.id
+		}, function(err, article) {
+			// If article is in db, set 'namey' to name
+			if (article) {
+				namey = article.name;
+				articleCreationDate = article.dateAdded;
+				articleContent = article.articleContent;
+				console.log("Found article in db");
+				console.log("namey = " + namey);
+				console.log(articleCreationDate);
+				console.log(articleContent);
+				res.render('article', {
+					'title' : namey,
+					'articleName' : namey,
+					'articleCreationDate' : articleCreationDate,
+					'articleContent' : articleContent
+				});
+				} else {
+					console.log("Article not found");
+					res.redirect('/articles');
+			}
+		});
+
+		
 	});
 
 //Edit an individual article if logged in

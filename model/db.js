@@ -7,7 +7,7 @@ var articleSchema = new mongoose.Schema({
   dateAdded: { type: Date, default: Date.now },
   dateUpdated: { type: Date, default: Date.now },
   version: Number, 
-  createdBy: String
+  createdBy: String,
   editedBy: [String],
   oldContent: [String]
 });
