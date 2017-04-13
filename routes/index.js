@@ -29,6 +29,7 @@ router.get('/', function(req, res, next) {
 
 router.get('/logout', function(req, res) {
 	res.clearCookie('name');
+	username='';
 	res.redirect('/');
 });
 

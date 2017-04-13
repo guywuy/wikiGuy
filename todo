@@ -18,6 +18,10 @@ Immediate tasks
 
 	Does article content submitted (and user sign up etc) need escaping?
 
+	Article displays without new lines (but they are present).
+
+	Editing article doesn't push the editedBy user (maybe if it's the same user as the last in array?)
+
 	AJAX form validation (ajax and server validation?!)
 
 	Add log in / log out links depending on whether logged in or not.

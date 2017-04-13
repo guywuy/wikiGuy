@@ -6,4 +6,6 @@
   <br>
   <input type='submit'>
 </form>
-<p class='error'>{{errorMessage}}</p>
+{{#if errorMessage}}
+	<p class='error'>{{errorMessage}}</p>
+{{/if}}

@@ -100,7 +100,6 @@ router.route('/add')
 // route middleware to validate :id
 router.param('id', function(req, res, next, id) {
     // do validation on id here
-    // blah blah validation
     // log something so we know its working
     console.log('doing id validations on ' + id);
 
@@ -128,11 +127,6 @@ router.route('/:id')
 				namey = article.name;
 				articleCreationDate = article.dateAdded.toDateString();
 				articleContent = article.articleContent;
-				// console.log("Found article in db");
-				// console.log("namey = " + namey);
-				// console.log(articleCreationDate);
-				// console.log(articleContent);
-
 				res.render('article', {
 					'title' : namey,
 					'loggedInUser' : username,
@@ -165,13 +159,13 @@ router.route('/:id/edit')
 				var articleCreationDate = article.dateAdded.toDateString();
 				var articleContent = article.articleContent;
 
-				res.render('article', {
-					'title' : namey,
+				res.render('article_edit', {
+					'title' : "Edit | " + namey,
 					'loggedInUser' : username,
 					'articleName' : namey,
-					'articleCreationDate' : articleCreationDate,
 					'articleContent' : articleContent,
-					'articleHistory' : req.id + "/history"
+					'articleVersion' : article.version,
+					'articleDelete' : "delete"
 				});
 				} else {
 					console.log("Article not found");
@@ -180,6 +174,43 @@ router.route('/:id/edit')
 		});
 		}
 		
+	})
+	//Save new content to article in database.
+	//Update dateUpdated, version, editedBy, oldContent
+	.post(function(req, res){
+		mongoose.model('Article').findByIdAndUpdate(req.id, { $set: { 
+			articleContent: req.body.article,
+			 dateUpdated: Date.now(),
+			 version: req.body.version += 1
+		},
+	$push: {
+			editedBy: username,
+			oldContent: req.body.article
+		}}, { new: true }, function (err, article) {
+  			if (err) return console.log(err);
+  		res.send(article);
+		});
+
+	});
+
+//Delete article and all its history etc
+router.route('/:id/delete')
+	.post(function(req, res){
+		if(!loggedIn){
+			res.send("Must be logged in to delete articles. Click <a href='/users/login'>here</a> to login.");
+		} else {
+		mongoose.model('Article').findById(req.id, function(err, article) {
+					article.remove(function(err, article) {
+							if (err) {
+								return console.error(err);
+							} else {
+								//Returning success message saying it was deleted
+								console.log('DELETE removing ID: ' + article._id);
+								res.redirect('/');
+								}
+							});
+					});
+		}
 	});
 
 //View history of article

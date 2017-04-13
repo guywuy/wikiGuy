@@ -1,0 +1,15 @@
+<h3>Edit: {{articleName}}</h3>
+<h4>Version: {{articleVersion}}</h4>
+<form method='POST'>
+  <label>Content</label><textarea name="article" required>{{articleContent}}</textarea>
+  <br>
+  <input type='hidden' name='version' value={{articleVersion}}>
+  <input type='submit'>
+</form>
+{{#if errorMessage}}
+	<p class='error'>{{errorMessage}}</p>
+{{/if}}
+<form action='./delete' method='post'>
+	<input type='hidden' value='DELETE'>
+	<button>Delete</button>
+</form>
