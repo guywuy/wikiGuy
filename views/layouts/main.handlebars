@@ -6,11 +6,16 @@
     <link href="/css/main.css" rel="stylesheet">
 </head>
 <body>
-	<div class="header">
-		<h1>WikiGuy</h1>
-		<!-- Can set this link via handlebars handler/helper? To set href and link content -->
-		<a href="/users/login">Log in</a>
-	</div>
+	<header>
+		<h1><a href="/">WikiGuy</a></h1>
+
+		{{#if loggedInUser}}
+  			<p class="loginout">Welcome {{loggedInUser}}. <a href="/logout">Log out</a></p>
+		{{else}}
+ 			<a href="/users/login" class="loginout">Log in</a>
+		{{/if}}
+		
+	</header>
     {{{body}}}
 
 </body>

@@ -7,12 +7,13 @@ var mongoose = require('mongoose');
 
 var check = require('../routes/validity');
 var loggedIn = false;
+var username;
 
  // route middleware that will happen on every request
 router.use(function(req, res, next) {
     // Parse the cookies on the request 
 	var cookies = cookie.parse(req.headers.cookie || '');
-
+	if (cookies.name) username = cookies.name.split(":")[0];
     loggedIn = check.loggedIn(cookies);
     console.log("Logged in = " + loggedIn);
 
@@ -33,8 +34,9 @@ router.get('/login', function(req, res){
 		res.redirect('/');
 	} else {
 		var context = {
-			'title': 'Log in'
-		};
+			'title': 'Log in',
+			'loggedInUser' : username
+			};
 		res.render('login', context);
 	}
 });
@@ -49,7 +51,8 @@ router.post('/login', function(req, res){
 		if (err) {
 			console.log("Username not found in db")
 			res.render('login', {
-				'title': 'Log in again'
+				'title': 'Log in again',
+				'loggedInUser' : username
 			});
 		}
 		// If user exists in Database
@@ -74,6 +77,7 @@ router.post('/login', function(req, res){
 			} else {
 				res.render('login', {
 					'title': 'Log in again',
+					'loggedInUser' : username,
 					'error': "Password is incorrect"
 				});
 			}
@@ -81,6 +85,7 @@ router.post('/login', function(req, res){
 			console.log("Username not found in db")
 			res.render('login', {
 				'title': 'Log in again',
+					'loggedInUser' : username,
 				'error': "Username doesn't exist in database"
 			});
 		}
@@ -93,7 +98,8 @@ router.get('/signup', function(req, res){
 		res.redirect('/');
 	} else {
 		var context = {
-			'title': 'Sign up'
+			'title': 'Sign up',
+			'loggedInUser' : username
 		};
 		res.render('signup', context);
 	}
@@ -116,6 +122,7 @@ router.post('/signup', function(req, res){
 				console.log("User already exists in db");
 				res.render('signup', {
 					'title': 'Sign up',
+					'loggedInUser' : username,
 					'errorMessage': "Username is already taken"
 				});
 			} else {
@@ -151,6 +158,7 @@ router.post('/signup', function(req, res){
 	} else {
 		res.render('signup', {
 					'title': 'Sign up',
+					'loggedInUser' : username,
 					'name': namey,
 					'email': req.body.email,
 					'errorMessageUsername': check.usernameErr,

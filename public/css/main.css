@@ -3,7 +3,7 @@
 	font-weight: 100;
 }
 body {
-
+	margin: 0;
 }
 a {
 	text-decoration: none;
@@ -13,7 +13,7 @@ a {
 }
 .header h1 {
 }
-.header a {
+.loginout {
 	float: right;
 	position: fixed;
 	right: 10px;

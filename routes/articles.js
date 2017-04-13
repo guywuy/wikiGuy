@@ -41,6 +41,7 @@ router.route('/')
 
 				res.render('articleslist', {
 					'title': 'All articles',
+					'loggedInUser' : username,
 					'article': articles
 				})
 			};
@@ -55,7 +56,10 @@ router.route('/add')
 		//if user is logged in, show form to submit article,
 		// else show link to log in
 		if (loggedIn){
-			res.render('article_add', {'title': 'Add an article'})
+			res.render('article_add', {
+				'title': 'Add an article',
+				'loggedInUser' : username 
+			})
 		} else {
 			res.redirect('/users/login');
 		}
@@ -74,10 +78,11 @@ router.route('/add')
 				console.log("Article already exists in db");
 				res.render('article_add', {
 					'title': 'Add an article',
+					'loggedInUser' : username,
 					'errorMessage': "Article with that title already exists"
 				});
 			} else {
-				// If username not already in db, add new user to the database with a hashed password.
+				// If article not already in db, add new article to the database.
 				mongoose.model('Article').create({
 					name: req.body.name,
 					articleContent: req.body.article,
@@ -121,14 +126,16 @@ router.route('/:id')
 			// If article is in db, set 'namey' to name
 			if (article) {
 				namey = article.name;
-				articleCreationDate = article.dateAdded;
+				articleCreationDate = article.dateAdded.toDateString();
 				articleContent = article.articleContent;
-				console.log("Found article in db");
-				console.log("namey = " + namey);
-				console.log(articleCreationDate);
-				console.log(articleContent);
+				// console.log("Found article in db");
+				// console.log("namey = " + namey);
+				// console.log(articleCreationDate);
+				// console.log(articleContent);
+
 				res.render('article', {
 					'title' : namey,
+					'loggedInUser' : username,
 					'articleName' : namey,
 					'articleCreationDate' : articleCreationDate,
 					'articleContent' : articleContent,
@@ -147,7 +154,32 @@ router.route('/:id')
 //Edit an individual article if logged in
 router.route('/:id/edit')
 	.get(function(req, res){
-		res.send("Route working");
+		if(!loggedIn){
+			res.send("Must be logged in to edit articles. Click <a href='/users/login'>here</a> to login.");
+		} else {mongoose.model('Article').findOne({
+			_id: req.id
+		}, function(err, article) {
+			// If article is in db, set 'namey' to name
+			if (article) {
+				var namey = article.name;
+				var articleCreationDate = article.dateAdded.toDateString();
+				var articleContent = article.articleContent;
+
+				res.render('article', {
+					'title' : namey,
+					'loggedInUser' : username,
+					'articleName' : namey,
+					'articleCreationDate' : articleCreationDate,
+					'articleContent' : articleContent,
+					'articleHistory' : req.id + "/history"
+				});
+				} else {
+					console.log("Article not found");
+					res.redirect('/articles');
+			}
+		});
+		}
+		
 	});
 
 //View history of article
