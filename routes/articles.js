@@ -99,9 +99,6 @@ router.route('/add')
 
 // route middleware to validate :id
 router.param('id', function(req, res, next, id) {
-    // do validation on id here
-    // log something so we know its working
-    console.log('doing id validations on ' + id);
 
     req.id = id;
 
@@ -132,6 +129,7 @@ router.route('/:id')
 					'loggedInUser' : username,
 					'articleName' : namey,
 					'articleCreationDate' : articleCreationDate,
+					'articleUpdatedDate' : article.dateUpdated.toDateString(),
 					'articleContent' : articleContent,
 					'articleEdit' : req.id + "/edit",
 					'articleHistory' : req.id + "/history"
@@ -178,17 +176,18 @@ router.route('/:id/edit')
 	//Save new content to article in database.
 	//Update dateUpdated, version, editedBy, oldContent
 	.post(function(req, res){
+		let newVersion = parseInt(req.body.version, 10) + 1;
 		mongoose.model('Article').findByIdAndUpdate(req.id, { $set: { 
 			articleContent: req.body.article,
 			 dateUpdated: Date.now(),
-			 version: req.body.version += 1
+			 version: newVersion
 		},
 	$push: {
 			editedBy: username,
 			oldContent: req.body.article
 		}}, { new: true }, function (err, article) {
   			if (err) return console.log(err);
-  		res.send(article);
+  		res.redirect('/articles');
 		});
 
 	});
@@ -216,7 +215,10 @@ router.route('/:id/delete')
 //View history of article
 router.route('/:id/history')
 	.get(function(req, res){
-		res.send("Route working");
+		mongoose.model('Article').findById(req.id, function(err, article) {
+			let latestVersion = parseInt(article.version, 10);
+			numVersions = latestVersion+1;
+		});
 	});
 
 //Delete an individual article

@@ -1,14 +1,15 @@
-<p>Article called {{articleName}}</p>
-<p>Article created on {{articleCreationDate}}</p>
-<p>{{articleContent}}</p>
+<h3 class="article-title">{{articleName}}</h3>
+<p class="small-information-text">Created : {{articleCreationDate}}</p>
+<p class="small-information-text">Last updated : {{articleUpdatedDate}}</p>
+<div class="article-content"><p>{{articleContent}}</p></div>
 
 
 
 <br>
-<a href = "/articles">See more articles</a>
+<a href = "/articles" class="small-information-text">See more articles</a>
 <br>
 {{#if loggedInUser}}
-<a href = {{articleEdit}}>Edit this page</a>
+<a href = {{articleEdit}} class="small-information-text">Edit this page</a>
 <br>
 {{/if}}
-<a href = {{articleHistory}}>See page's history</a>
+<a href = {{articleHistory}} class="small-information-text">See page's history</a>
