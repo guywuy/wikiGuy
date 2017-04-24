@@ -39,7 +39,7 @@ router.route('/')
 				// console.log(memcache.keys());
 				// // console.log("Stats keys" + memcache.getStats().keys);
 
-				res.render('articleslist', {
+				res.render('articles_list', {
 					'title': 'All articles',
 					'loggedInUser' : username,
 					'article': articles
@@ -216,8 +216,26 @@ router.route('/:id/delete')
 router.route('/:id/history')
 	.get(function(req, res){
 		mongoose.model('Article').findById(req.id, function(err, article) {
+			//Get latest version of article
 			let latestVersion = parseInt(article.version, 10);
-			numVersions = latestVersion+1;
+			
+			//Get the requested version (from query parameter)
+			let qVersion = parseInt(req.query.v, 10);
+			console.log("Query parameter version = " + qVersion);
+			//If there was no query parameter, or is an invalid version, use latestVersion
+			if (!Number.isInteger(qVersion) || qVersion>latestVersion || qVersion<0){
+				qVersion = latestVersion;
+			};
+			let context = {
+				'title' : article.name + " | History",
+				'loggedInUser' : username,
+				'articleName' : article.name,
+				'version' : qVersion,
+				'articleContent' : article.oldContent[qVersion],
+				'articleVersion' : qVersion,
+				'editedBy' : article.editedBy[qVersion]
+			}
+			res.render('article_history', context);
 		});
 	});
 

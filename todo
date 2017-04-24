@@ -20,7 +20,7 @@ Immediate tasks
 
 	Article displays without new lines (but they are present).
 
-	Editing article doesn't push the editedBy user (maybe if it's the same user as the last in array?)
+	Change article schema to have editedBy as array, so can view in history
 
 	AJAX form validation (ajax and server validation?!)
 
