@@ -5,7 +5,7 @@ var articleSchema = new mongoose.Schema({
   name: String,
   articleContent: String,
   dateAdded: { type: Date, default: Date.now },
-  dateUpdated: { type: Date, default: Date.now },
+  dateUpdated: [Date],
   version: Number, 
   createdBy: String,
   editedBy: [String],

@@ -85,6 +85,7 @@ router.route('/add')
 					name: req.body.name,
 					articleContent: req.body.article,
 					version: 0,
+					dateUpdated: [Date.now()],
 					createdBy: username,
 					editedBy: [username],
 					oldContent: [req.body.article]
@@ -127,7 +128,7 @@ router.route('/:id')
 					'loggedInUser' : username,
 					'articleName' : namey,
 					'articleCreationDate' : articleCreationDate,
-					'articleUpdatedDate' : article.dateUpdated.toDateString(),
+					'articleUpdatedDate' : article.dateUpdated[article.version].toDateString(),
 					'articleContent' : articleContent,
 					'articleEdit' : req.id + "/edit",
 					'articleHistory' : req.id + "/history"
