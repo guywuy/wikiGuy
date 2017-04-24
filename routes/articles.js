@@ -100,36 +100,27 @@ router.route('/add')
 router.param('id', function(req, res, next, id) {
 
     req.id = id;
-
-    // go to the next thing
     next(); 
 });
 
 //View an individual article
 router.route('/:id')
 	.get(function(req, res){
-		//Get name from db via id and
-
-		var namey;
-		var articleCreationDate;
-		var articleContent;
 
     //Get name from database via ip and set as parameter
     mongoose.model('Article').findOne({
 			_id: req.id
 		}, function(err, article) {
 			// If article is in db, set 'namey' to name
+			// var updatedDate = 
 			if (article) {
-				namey = article.name;
-				articleCreationDate = article.dateAdded.toDateString();
-				articleContent = article.articleContent;
 				res.render('article', {
-					'title' : namey,
+					'title' : article.name,
 					'loggedInUser' : username,
-					'articleName' : namey,
-					'articleCreationDate' : articleCreationDate,
+					'articleName' : article.name,
+					'articleCreationDate' : article.dateAdded.toDateString(),
 					'articleUpdatedDate' : article.dateUpdated[article.version].toDateString(),
-					'articleContent' : articleContent,
+					'articleContent' : article.articleContent,
 					'articleEdit' : req.id + "/edit",
 					'articleHistory' : req.id + "/history"
 				});
@@ -138,8 +129,6 @@ router.route('/:id')
 					res.redirect('/articles');
 			}
 		});
-
-		
 	});
 
 //Edit an individual article if logged in
@@ -152,15 +141,11 @@ router.route('/:id/edit')
 		}, function(err, article) {
 			// If article is in db, set 'namey' to name
 			if (article) {
-				var namey = article.name;
-				var articleCreationDate = article.dateAdded.toDateString();
-				var articleContent = article.articleContent;
-
 				res.render('article_edit', {
-					'title' : "Edit | " + namey,
+					'title' : "Edit | " + article.name,
 					'loggedInUser' : username,
-					'articleName' : namey,
-					'articleContent' : articleContent,
+					'articleName' : article.name,
+					'articleContent' : article.articleContent,
 					'articleVersion' : article.version,
 					'articleDelete' : "delete"
 				});
@@ -178,11 +163,11 @@ router.route('/:id/edit')
 		let newVersion = parseInt(req.body.version, 10) + 1;
 		mongoose.model('Article').findByIdAndUpdate(req.id, { $set: { 
 			articleContent: req.body.article,
-			 dateUpdated: Date.now(),
 			 version: newVersion
 		},
 	$push: {
 			editedBy: username,
+			dateUpdated: Date.now(),
 			oldContent: req.body.article
 		}}, { new: true }, function (err, article) {
   			if (err) return console.log(err);
@@ -234,10 +219,12 @@ router.route('/:id/history')
 				'title' : article.name + " | History",
 				'loggedInUser' : username,
 				'articleName' : article.name,
+				'articleId' : req.id,
 				'version' : vOptions,
 				'articleContent' : article.oldContent[qVersion],
 				'articleVersion' : qVersion,
-				'editedBy' : article.editedBy[qVersion]
+				'editedBy' : article.editedBy[qVersion],
+				'articleUpdatedDate' : article.dateUpdated[qVersion].toDateString()
 			}
 			res.render('article_history', context);
 		});

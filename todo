@@ -16,14 +16,7 @@ Working login= Guy A5daasda
 
 Immediate tasks
 
-	Does article content submitted (and user sign up etc) need escaping?
-
-	Article displays without new lines (but they are present).
-
-	Change article schema to have editedBy as array, so can view in history
-
 	AJAX form validation (ajax and server validation?!)
-
 
 	Add in cache
 

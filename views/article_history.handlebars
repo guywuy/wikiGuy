@@ -1,5 +1,7 @@
-<h3>History: {{articleName}}</h3>
+<h3>History: <a href="/articles/{{articleId}}">{{articleName}}</a></h3>
+
 <p class="small-information-text">Version: {{articleVersion}}</p>
+<p class="small-information-text">Edited by {{editedBy}} on {{articleUpdatedDate}}</p>
 
 <form method="GET">
   <select name="v">
@@ -12,6 +14,6 @@
   <input type="submit">
 </form>
 
-<p class="small-information-text">Edited by {{editedBy}} on {{articleUpdatedDate}}</p>
+
 
 <div class="article-content"><p>{{articleContent}}</p></div>
