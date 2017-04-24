@@ -1,16 +1,12 @@
 <h3>History: {{articleName}}</h3>
-<p class="small-information-text">Version: {{version}}</p>
-<!-- //For {{numVersions}}, have dropdown form submission of number of versions (or list of links) which reload articleContent, Version and edited by (and editedDate)
-//How to reload content? With page reload? Add query parameter to URL? Or able to fetch asynchronously and avoid route and page refresh? -->
+<p class="small-information-text">Version: {{articleVersion}}</p>
 
-<form action="GET">
+<form method="GET">
   <select name="v">
-
- 	<option value="0">0</option>
- 	<option value="1">1</option>
- 	<option value="2">2</option>
- 	<option value="3">3</option>
- 	<option value="4">4</option>
+	{{#each version}}
+        <option name={{this}}>{{this}}</option>
+	{{/each}}
+  	
   </select>
   <br><br>
   <input type="submit">

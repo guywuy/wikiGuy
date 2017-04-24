@@ -17,8 +17,6 @@ router.use(function(req, res, next) {
 	if (cookies.name) username = cookies.name.split(":")[0];
 
     loggedIn = check.loggedIn(cookies);
-    console.log("Logged in = " + loggedIn);
-
     next(); 
 });
 
@@ -221,16 +219,21 @@ router.route('/:id/history')
 			
 			//Get the requested version (from query parameter)
 			let qVersion = parseInt(req.query.v, 10);
-			console.log("Query parameter version = " + qVersion);
 			//If there was no query parameter, or is an invalid version, use latestVersion
 			if (!Number.isInteger(qVersion) || qVersion>latestVersion || qVersion<0){
 				qVersion = latestVersion;
 			};
+
+			//Make array of numbers up to latest version to be set as options in template
+			let vOptions = [];
+			for (let i = 0; i<=latestVersion; i++){
+				vOptions.push(i);
+			}
 			let context = {
 				'title' : article.name + " | History",
 				'loggedInUser' : username,
 				'articleName' : article.name,
-				'version' : qVersion,
+				'version' : vOptions,
 				'articleContent' : article.oldContent[qVersion],
 				'articleVersion' : qVersion,
 				'editedBy' : article.editedBy[qVersion]

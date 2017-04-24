@@ -1,11 +1,11 @@
 <h3>Here is a list of all articles in the database:</h3>
 
 {{#if article}}
-{{#each article}}
+	{{#each article}}
         <li class="articlelist"><a href="/articles/{{this.id}}">{{this.name}}</a></li>
-{{/each}}
+	{{/each}}
 {{else}}
-<p>No articles in the database!</p>
+	<p>No articles in the database!</p>
 {{/if}}
 <br>
 <p class="small-information-text"><a href="articles/add">Add an article</a></p>
