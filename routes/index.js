@@ -46,7 +46,14 @@ router.get('/', function(req, res, next) {
   var context = {
 		'title': 'WikiGuy',
 		'loggedInUser' : username,
-		'featuredArticles' : twoArticles
+		'featuredArticles' : twoArticles,
+		helpers: {
+			firstLine: function(object) {
+				var content = object.articleContent;
+				return content.split(".")[0] + ".";
+
+			}
+		}
 	};
 	res.render('home', context);
 });
