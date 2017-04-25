@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var cookie = require('cookie');
+var mongoose = require('mongoose');
 var memcache = require('../memcache');
 
 var check = require('../routes/validity');
@@ -21,11 +22,32 @@ router.use(function(req, res, next) {
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
+	//Check if memcache has keys. If it does, use two most recently updated, else request from the database.
+	let twoArticles=[];
+		//First two articles from memcache (should be sorted by dateUpdated...)
+		if (memcache.getStats().keys>1){
+			// Retreiving from cache
+			for (var i = 0; i < 2; i++){
+				twoArticles[i] = memcache.get(i);
+			}
+		} else {
+			console.log("requesting from database");
+		mongoose.model('Article').find({}).limit(2).sort({dateUpdated: -1}).exec(function(err, articles) {
+			if (err) {
+				return console.error(err);
+			} else {
+				for (article in articles){
+					twoArticles.push(articles[article]);
+				}
+			}
+		})
+	}
+
   var context = {
 		'title': 'WikiGuy',
-		'loggedInUser' : username
+		'loggedInUser' : username,
+		'featuredArticles' : twoArticles
 	};
-	console.log("Memcache from articles = " + memcache.keys());
 	res.render('home', context);
 });
 

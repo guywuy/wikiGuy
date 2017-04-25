@@ -42,7 +42,7 @@ router.route('/')
 				})
 		} else {
 		console.log("requesting from database");
-		mongoose.model('Article').find({}).sort({dateUpdated: 1}).exec(function(err, articles) {
+		mongoose.model('Article').find({}).sort({dateUpdated: -1}).exec(function(err, articles) {
 			if (err) {
 				return console.error(err);
 			} else {

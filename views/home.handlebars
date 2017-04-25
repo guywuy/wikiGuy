@@ -1,5 +1,9 @@
 <p>Welcome. Here you can find and edit a collection of articles.</p>
 
+{{#each featuredArticles}}
+        <li class="article-list"><a href="/articles/{{this.id}}">{{this.name}}</a>
+        <p>{{this.articleContent}}</p></li>
+	{{/each}}
 <br>
 <div class="home-option"><a href="articles">See all articles</a></div>
 <div class="home-option"><a href="articles/add">Add an article</a></div>
