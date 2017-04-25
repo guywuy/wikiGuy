@@ -15,8 +15,6 @@ router.use(function(req, res, next) {
 	var cookies = cookie.parse(req.headers.cookie || '');
 	if (cookies.name) username = cookies.name.split(":")[0];
     loggedIn = check.loggedIn(cookies);
-    console.log("Logged in = " + loggedIn);
-
     next(); 
 });
 
@@ -43,8 +41,6 @@ router.get('/login', function(req, res){
 router.post('/login', function(req, res){
 	// Check that user exists in db and their pw is correct.
 	// If both true, redirect to /, else reload page w/error.
-	console.log("Inputted name = " + req.body.name);
-	console.log("Inputted password = " + req.body.password);
 	mongoose.model('User').findOne({
 		name: req.body.name
 	}, function(err, user) {

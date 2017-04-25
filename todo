@@ -11,14 +11,15 @@ Wiki like site. Features:
 
 
 Working login= Guy A5daasda
+or				Terry same
 
 
 
 Immediate tasks
 
-	AJAX form validation (ajax and server validation?!)
+	Homepage shows last 2 edited articles with First line of content underneath. (How to access same memcache in different js file/route?)
 
-	Add in cache
+	AJAX form validation (ajax and server validation?!)
 
 	Improve styling
 

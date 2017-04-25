@@ -4,6 +4,9 @@ var express = require('express');
 var router = express.Router();
 var cookie = require('cookie');
 var mongoose = require('mongoose');
+var NodeCache = require( "node-cache" );
+//cache is of format ['number index': 'Article']
+var memcache = new NodeCache();
 
 var check = require('../routes/validity');
 var loggedIn = false;
@@ -26,16 +29,31 @@ router.route('/')
 	//GET all articles
 	.get(function(req, res, next) {
 
+		//CHECK CACHE if it isn't empty, add contents to array and render page
+		var numKeys=memcache.getStats().keys;
+		if (numKeys>0){
+			// Retreiving from cache
+			let articlesFromCache = [];
+			for (var i = 0; i < numKeys; i++){
+				articlesFromCache[i] = memcache.get(i);
+			}
+			res.render('articles_list', {
+					'title': 'All articles',
+					'loggedInUser' : username,
+					'article': articlesFromCache				
+				})
+		} else {
+		console.log("requesting from database");
 		mongoose.model('Article').find({}).sort({dateUpdated: 1}).exec(function(err, articles) {
 			if (err) {
 				return console.error(err);
 			} else {
-				// //Add to memcache, as key->value pair of int->food object
-				// for (food in foods){
-				// 	memcache.set(food, foods[food]);
-				// }
-				// console.log(memcache.keys());
-				// // console.log("Stats keys" + memcache.getStats().keys);
+				// //Add to memcache, as key->value pair of int->Article
+				for (article in articles){
+					memcache.set(article, articles[article]);
+				}
+				console.log(memcache.keys());
+				// console.log("Stats keys" + memcache.getStats().keys);
 
 				res.render('articles_list', {
 					'title': 'All articles',
@@ -44,7 +62,7 @@ router.route('/')
 				})
 			};
 		});
-
+	}
 	})
 
 
@@ -90,7 +108,11 @@ router.route('/add')
 					editedBy: [username],
 					oldContent: [req.body.article]
 				});
-				res.redirect('/articles');
+				//Delete all cache so it has to regenerate
+				memcache.flushAll();
+				
+				//redirect to homepage
+				res.redirect('/');
 			}
 		});
 		}
@@ -171,9 +193,11 @@ router.route('/:id/edit')
 			oldContent: req.body.article
 		}}, { new: true }, function (err, article) {
   			if (err) return console.log(err);
-  		res.redirect('/articles');
 		});
+		//Delete all cache so it has to regenerate
+		memcache.flushAll();
 
+		res.redirect('/articles');
 	});
 
 //Delete article and all its history etc
@@ -193,6 +217,8 @@ router.route('/:id/delete')
 								}
 							});
 					});
+			//Delete all cache so it has to regenerate
+			memcache.flushAll();
 		}
 	});
 
@@ -230,14 +256,5 @@ router.route('/:id/history')
 		});
 	});
 
-//Delete an individual article
-router.route('/:id/edit/delete')
-
-	//Check user is logged in (and has permission?!) then delete article,
-	// update db and cache and return to article list
-	.post(function(req, res){
-		//res.redirect('/articles');
-		res.redirect('/');
-	});
 
 module.exports = router;
