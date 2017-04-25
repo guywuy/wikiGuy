@@ -1,21 +1,10 @@
-Wiki like site. Features:
-	User log in and sign up (and logout).
-	Homepage displays 5 latest new or latest edited articles
-	Each article has history - changes made when and by whom?
-	Search for articles. (look for mongooses regexp search functions)
-	View all articles by first letter.
-
-	Homepage is cached and cache is updated when article is updated or posted.
-	Display number of articles and users on the homepage.
-
-
 
 Working login= Guy A5daasda
 or				Terry same
 
 
 
-Immediate tasks
+Tasks to do:
 
 	Homepage shows last 2 edited articles with First line of content underneath. (How to access same memcache in different js file/route?)
 
@@ -23,3 +12,6 @@ Immediate tasks
 
 	Improve styling
 
+	Instead of flushing memcache on updates/deletions, update it instead (as well as updating db).
+
+	Articles list to offer search, or ability to browse by letter.(Can do with either reloading page (with query parameter) or by page fragments (make helper function for handlebars to make link in letter if there is an article starting with that letter, and display list alphabetically, separated by letter.) Latter is better option for now, former better if there are many many articles.)

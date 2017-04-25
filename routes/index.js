@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var cookie = require('cookie');
+var memcache = require('../memcache');
 
 var check = require('../routes/validity');
 var loggedIn = false;
@@ -24,6 +25,7 @@ router.get('/', function(req, res, next) {
 		'title': 'WikiGuy',
 		'loggedInUser' : username
 	};
+	console.log("Memcache from articles = " + memcache.keys());
 	res.render('home', context);
 });
 

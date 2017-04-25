@@ -4,9 +4,7 @@ var express = require('express');
 var router = express.Router();
 var cookie = require('cookie');
 var mongoose = require('mongoose');
-var NodeCache = require( "node-cache" );
-//cache is of format ['number index': 'Article']
-var memcache = new NodeCache();
+var memcache = require('../memcache');
 
 var check = require('../routes/validity');
 var loggedIn = false;
@@ -52,8 +50,8 @@ router.route('/')
 				for (article in articles){
 					memcache.set(article, articles[article]);
 				}
+
 				console.log(memcache.keys());
-				// console.log("Stats keys" + memcache.getStats().keys);
 
 				res.render('articles_list', {
 					'title': 'All articles',
