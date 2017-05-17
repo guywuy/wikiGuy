@@ -8,8 +8,7 @@ Tasks to do:
 
 	AJAX form validation (ajax and server validation?!)
 
-	Improve styling
 
 	Instead of flushing memcache on updates/deletions, update it instead (as well as updating db).
 
-	Articles list to offer search, or ability to browse by letter.(Can do with either reloading page (with query parameter) or by page fragments (make helper function for handlebars to make link in letter if there is an article starting with that letter, and display list alphabetically, separated by letter.) Latter is better option for now, former better if there are many many articles.)
+	Homepage is only loading the two articles after articles-list has been visited...
