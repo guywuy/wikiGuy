@@ -1,19 +1,22 @@
-<h3>History: <a href="/articles/{{articleId}}">{{articleName}}</a></h3>
+<header>
+    <h3 class="version-header">History: <a href="/articles/{{articleId}}">{{articleName}}</a></h3>
+    <form method="GET" id="version-form">
+        <label>Version:</label>
+        <select name="v">
+            {{#each version}}
+            <option name={{this}} {{selectedOpt this}}>{{this}}</option>
+            {{/each}}
+        </select>
+        <input type="submit" id="submit-version" value="Go">
+    </form>
+</header>
 
-<p class="small-information-text">Version: {{articleVersion}}</p>
-<p class="small-information-text">Edited by {{editedBy}} on {{articleUpdatedDate}}</p>
-
-<form method="GET">
-  <select name="v">
-	{{#each version}}
-        <option name={{this}}>{{this}}</option>
-	{{/each}}
-  	
-  </select>
-  <br><br>
-  <input type="submit">
-</form>
-
+<p class="small-information-text">Version: {{articleVersion}} | Edited by {{editedBy}} on {{articleUpdatedDate}}</p>
 
 
-<div class="article-content"><p>{{articleContent}}</p></div>
+
+
+
+<div class="article-content">
+    <p>{{articleContent}}</p>
+</div>

@@ -1,24 +1,24 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="utf-8">
     <title>{{title}}</title>
     <link href="/css/main.css" rel="stylesheet">
 </head>
-<body>
-	
-	<header>
-		<h1><a href="/">WikiGuy</a></h1>
 
-		{{#if loggedInUser}}
-  			<p class="loginout">Welcome {{loggedInUser}}. <a href="/logout">Log out</a></p>
-		{{else}}
- 			<a href="/users/login" class="loginout">Log in</a>
-		{{/if}}
-		
-	</header>
-	<main>
-    	{{{body}}}
-	</main>
+<body>
+
+    <header>
+        <h1><a id="home-logo" href="/">WikiGuy</a></h1> {{#if loggedInUser}}
+        <p class="loginout">Welcome {{loggedInUser}}. <a href="/logout">Log out</a></p>
+        {{else}}
+        <a href="/users/login" class="loginout">Log in</a> {{/if}}
+
+    </header>
+    <main>
+        {{{body}}}
+    </main>
 </body>
+
 </html>

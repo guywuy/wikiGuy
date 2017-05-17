@@ -1,9 +1,14 @@
 <p>Welcome. Here you can find and edit a collection of articles.</p>
+<p>Here are the two most recently edited articles.</p>
 
-{{#each featuredArticles}}
-        <li class="article-list"><a href="/articles/{{this.id}}">{{this.name}}</a>
-        <p>{{firstLine this}}</p></li>
-	{{/each}}
+<div class="article-preview-container">
+    {{#each featuredArticles}}
+    <a href="/articles/{{this.id}}" class="article-preview">
+        <h3>{{this.name}}</h3>
+        <p>{{firstLine this}}</p>
+    </a>
+    {{/each}}
+</div>
 <br>
 <div class="home-option"><a href="articles">See all articles</a></div>
 <div class="home-option"><a href="articles/add">Add an article</a></div>
